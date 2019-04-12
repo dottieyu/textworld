@@ -71,11 +71,6 @@ public abstract class MovingEntity extends ItemContainer {
         return n;
     }
 
-    public boolean isRoomCloserTo(Player p, Graph.Node n) {
-        // TODO: idfk how to implement this :/
-        return false;
-    }
-
     public String toString() {
         return getName() + " (" + getDescription() + ")";
     }
