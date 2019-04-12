@@ -2,10 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    public static Graph g;
+
     public static void main(String[] args) {
 
         // create nodes and edges
-        Graph g = new Graph();
+        g = new Graph();
         g.addNode("hall", "a long dark hallway");
         g.addNode("closet", "where the monsters live");
         g.addNode("dungeon");
@@ -40,44 +42,18 @@ public class Main {
         }
 
         // user
-        String in;
+        String[] in;
         Scanner s = new Scanner(System.in);
 
         do {
             System.out.println("You are in the " + player.getCurrentRoom().getName());
             System.out.print("What do you want to do? >");
-            in = s.nextLine();
+            in = s.nextLine().split(" ");
+            Command command = parseCommand(in, player);
 
-            String[] response = in.split(" ");
-
-            if (response.length == 1) {
-                if (response[0].equals("look")) {
-                    System.out.println("you see entrances: " + player.getCurrentRoom().getNeighborNames());
-                    System.out.println("you see items: " + player.getCurrentRoom().getItemInventory());
-                    System.out.println("you hold items: " + player.getItemInventory());
-                    System.out.println("you see creatures: " + player.getCurrentRoom().getMovingEntities());
-                } else {
-                    System.out.println("can't do that. available commands: go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>");
-                }
-            } else if (response.length == 2) {
-                if (response[0].equals("go") && response[1].equals("random")) {
-                    player.moveToRandomRoom();
-                } else if (response[0].equals("go") && player.getCurrentRoom().containsNeighbor(response[1])) {
-                    player.moveToRoom(response[1]);
-                    System.out.println("SUCCESS");
-                } else if (response[0].equals("addroom")) {
-                    g.addNode(response[1]);
-                    g.addDirectedEdge(player.getCurrentRoom().getName(), response[1]);
-                    System.out.println("SUCCESS");
-                } else if (response[0].equals("take") && player.getCurrentRoom().containsItem(response[1])) {
-                    player.addItem(player.getCurrentRoom().removeItem(response[1]));
-                    System.out.println("SUCCESS");
-                } else if (response[0].equals("drop") && player.containsItem(response[1])) {
-                    player.getCurrentRoom().addItem(player.removeItem(response[1]));
-                    System.out.println("SUCCESS");
-                } else {
-                    System.out.println("can't do that. available commands: go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>");
-                }
+            boolean flag = command.execute();
+            if (flag) {
+                System.out.println("SUCCESS");
             } else {
                 System.out.println("can't do that. available commands: go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>");
             }
@@ -88,7 +64,17 @@ public class Main {
 
             System.out.println();
 
-        } while (!in.equals("quit"));
+        } while (!in[0].equals("quit"));
 
+    }
+
+    public static Command parseCommand(String[] in, Player player) {
+        if (in[0].equals("go")) return new GoCommand(in, player);
+        if (in[0].equals("look")) return new LookCommand(in, player);
+        if (in[0].equals("addroom")) return new AddroomCommand(g, in, player);
+        if (in[0].equals("take")) return new TakeCommand(in, player);
+        if (in[0].equals("drop")) return new DropCommand(in, player);
+
+        return new ErrorCommand(in, player);
     }
 }
