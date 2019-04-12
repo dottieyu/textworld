@@ -43,6 +43,14 @@ public class Graph {
         return nodes.get(name);
     }
 
+    public ArrayList<Node> getNodes() {
+        ArrayList<Node> nodes = new ArrayList<>();
+        for (String key : this.nodes.keySet()) {
+            nodes.add(this.nodes.get(key));
+        }
+        return nodes;
+    }
+
     public Node getRandomNode() {
          ArrayList<Node> nodes = new ArrayList<>(this.nodes.values());
          int i = (int) (Math.random() * nodes.size());
@@ -86,7 +94,7 @@ public class Graph {
     public class Node extends ItemContainer {
         private String name;
         private HashMap<String, Node> neighbors;
-        private String description;
+        private String description = "";
         private ArrayList<MovingEntity> movingEntities;
 
         public Node(String name) {
@@ -140,7 +148,7 @@ public class Graph {
         public String getNeighborNames() {
             String str = "";
             for (String key : neighbors.keySet()) {
-                str += key + " (" + getNeighbor(key).getDescription() + "); ";
+                str += key + ", ";
             }
             return str;
         }
@@ -195,6 +203,14 @@ public class Graph {
             return this.movingEntities;
         }
 
+        public String getMovingEntitiesNames() {
+            String str = "";
+            for (MovingEntity e : this.movingEntities) {
+                str += e.getName() + ", ";
+            }
+            return str;
+        }
+
         public void addMovingEntity(MovingEntity movingEntity) {
             this.movingEntities.add(movingEntity);
         }
@@ -238,16 +254,25 @@ public class Graph {
         }
 
         public String toString() {
-            return getName() + " (" + getDescription() + ")";
+            String str = "";
+            for (MovingEntity movingEntity : movingEntities) {
+                str += movingEntity.toString() + ", ";
+            }
+
+            if (str.equals("")) {
+                return "NODE " + getName() + "\t\tITEMS: " + super.toString() + "; MOVINGENTITIES: (none)\n";
+            } else {
+                return "NODE " + getName() + "\t\tITEMS: " + super.toString() + "; MOVINGENTITIES: " + str + "\n";
+            }
         }
     }
 
     public String toString() {
-        ArrayList<Node> nodes = new ArrayList<>(this.nodes.values());
-        String s = "Nodes in graph: ";
+        ArrayList<Node> nodes = this.getNodes();
+        String str = "";
         for (Node node : nodes) {
-            s += node.getName() + "; ";
+            str += node.toString();
         }
-        return s;
+        return str;
     }
 }

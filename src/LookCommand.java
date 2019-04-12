@@ -1,16 +1,21 @@
 public class LookCommand extends Command {
+    Graph g;
 
-    public LookCommand(String[] in, MovingEntity player) {
+    public LookCommand(Graph g, String[] in, MovingEntity player) {
         super(in, player);
+        this.g = g;
     }
 
     @Override
     public boolean execute() {
         if (in.length == 1) {
-            System.out.println("you see entrances: " + player.getCurrentRoom().getNeighborNames());
-            System.out.println("you see items: " + player.getCurrentRoom().getItemInventory());
-            System.out.println("you hold items: " + player.getItemInventory());
-            System.out.println("you see creatures: " + player.getCurrentRoom().getMovingEntities());
+            System.out.println("MASTER GRAPH INFORMATION");
+            System.out.println(g.toString());
+            System.out.println();
+            System.out.println("YOU CAN ENTER: " + player.getCurrentRoom().getNeighborNames());
+            System.out.println("YOU CAN TAKE: " + player.getCurrentRoom().getItemInventory());
+            System.out.println("YOU CAN DROP: " + player.getItemInventory());
+            System.out.println("YOU SEE CREATURES: " + player.getCurrentRoom().getMovingEntities());
             return true;
         }
 

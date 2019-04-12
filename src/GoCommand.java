@@ -9,9 +9,9 @@ public class GoCommand extends Command {
         if (in.length == 2) {
             if (in[1].equals("random")) {
                 player.moveToRandomRoom();
+                return true;
             } else {
                 return player.moveToRoom(in[1]);
-
             }
         }
         return false;

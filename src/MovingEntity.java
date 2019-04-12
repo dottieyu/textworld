@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public abstract class MovingEntity extends ItemContainer {
-    public String name, description;
+    public String name, description = "";
     public Graph.Node currentRoom;
     public boolean movedFlag = false;
 
@@ -81,6 +81,7 @@ public abstract class MovingEntity extends ItemContainer {
     }
 
     public String toString() {
+        if (getDescription().equals("")) return getName();
         return getName() + " (" + getDescription() + ")";
     }
 

@@ -8,7 +8,7 @@ public class Item {
 
     public Item(String name) {
         this.name = name;
-        this.description = "no description";
+        this.description = "";
     }
 
     public String getName() {
@@ -28,6 +28,7 @@ public class Item {
     }
 
     public String toString() {
+        if (getDescription().equals("")) return getName();
         return getName() + " (" + getDescription() + ")";
     }
 }

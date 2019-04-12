@@ -47,12 +47,17 @@ public abstract class ItemContainer {
     public String getItemInventory() {
         String itemNames = "";
         for (Item item : items) {
-            itemNames += item.toString() + "; ";
+            itemNames += item.toString() + ", ";
         }
         return itemNames;
     }
 
     public String toString() {
-        return items.toString();
+        String str = "";
+        if (items.size() == 0) return "(none)";
+        for (Item item : items) {
+            str += item.toString() + ", ";
+        }
+        return str;
     }
 }

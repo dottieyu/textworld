@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     public static Graph g;
+    public static Player player;
 
     public static void main(String[] args) {
 
@@ -28,7 +29,7 @@ public class Main {
         g.addUndirectedEdge("bedroom1", "bedroom2");
 
         // create player
-        Player player = new Player("dottie", "best player", g.getNode("hall"));
+        player = new Player("dottie", "best player", g.getNode("hall"));
         ArrayList<Item> items = new ArrayList<>();
         items.add(new Item("book"));
         items.add(new Item("puppy"));
@@ -47,11 +48,11 @@ public class Main {
             System.out.println("You are in the " + player.getCurrentRoom().getName());
             System.out.print("What do you want to do? >");
             in = s.nextLine().split(" ");
-            Command command = parseCommand(in, player);
+            Command command = parseCommand(in);
 
             boolean flag = command.execute();
             if (flag) {
-                System.out.println("SUCCESS");
+                System.out.println("***SUCCESS***");
                 g.moveAllMovingEntitiesToRandomRoom();
             } else {
                 System.out.println("can't do that. available commands: kill <movingEntity>, go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>");
@@ -63,9 +64,9 @@ public class Main {
 
     }
 
-    public static Command parseCommand(String[] in, Player player) {
+    public static Command parseCommand(String[] in) {
         if (in[0].equals("go")) return new GoCommand(in, player);
-        if (in[0].equals("look")) return new LookCommand(in, player);
+        if (in[0].equals("look")) return new LookCommand(g, in, player);
         if (in[0].equals("addroom")) return new AddroomCommand(g, in, player);
         if (in[0].equals("take")) return new TakeCommand(in, player);
         if (in[0].equals("drop")) return new DropCommand(in, player);
