@@ -94,6 +94,7 @@ public class Graph {
         }
 
         public Node getRandomNeighbor() {
+            if (this.neighbors.size() == 0) return this;
             int i = (int) (Math.random() * this.neighbors.size());
             return this.neighbors.get(i);
         }

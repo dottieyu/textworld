@@ -16,8 +16,6 @@ public class Chicken extends MovingEntity {
     }
 
     public void moveToRandomRoom() {
-        if (currentRoom.getNeighborRooms().size() == 0) return;
-        int i = (int) (Math.random() * currentRoom.getNeighborRooms().size());
-        this.moveToRoom(currentRoom.getNeighborRooms().get(i));
+        this.moveToRoom(this.getRandomAdjacentRoom());
     }
 }
