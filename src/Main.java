@@ -35,11 +35,7 @@ public class Main {
         items.add(new Item("ball"));
         player.addItems(items);
 
-        // create movingEntities
-        ArrayList<Chicken> chickens = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            chickens.add(new Chicken("bob", "the chick", g.getNode("closet")));
-        }
+        g.getNode("closet").addMovingEntities(50, "chicken");
 
         // user
         String[] in;
@@ -58,9 +54,7 @@ public class Main {
                 System.out.println("can't do that. available commands: go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>");
             }
 
-            for (Chicken chicken : chickens) {
-                chicken.moveToRandomRoom();
-            }
+            g.moveAllMovingEntitiesToRandomRoom();
 
             System.out.println();
 

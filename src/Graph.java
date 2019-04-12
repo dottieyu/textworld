@@ -49,6 +49,15 @@ public class Graph {
          return nodes.get(i);
     }
 
+    public boolean moveAllMovingEntitiesToRandomRoom() {
+        for (Node node : nodes.values()) {
+            for (MovingEntity movingEntity : node.getMovingEntities()) {
+                movingEntity.moveToRandomRoom();
+            }
+        }
+        return true;
+    }
+
     public class Node extends ItemContainer {
         private String name;
         private HashMap<String, Node> neighbors;
@@ -153,6 +162,26 @@ public class Graph {
 
         public boolean destroyMovingEntity(MovingEntity m) {
             return this.movingEntities.remove(m);
+        }
+
+        public boolean addMovingEntities(int n, String type) {
+            if (type.equals("chicken")) {
+                for (int i = 0; i < n; i++) {
+                    movingEntities.add(new Chicken("chick" + i, this));
+                }
+                return true;
+            } else if (type.equals("wumpus")) {
+                for (int i = 0; i < n; i++) {
+                    movingEntities.add(new Wumpus("wumpus" + i, this));
+                }
+                return true;
+            } else if (type.equals("pop star")) {
+                for (int i = 0; i < n; i++) {
+                    movingEntities.add(new PopStar("pop star" + i, this));
+                }
+                return true;
+            }
+            return false;
         }
 
         public String toString() {
