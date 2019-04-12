@@ -1,11 +1,24 @@
 public abstract class MovingEntity extends ItemContainer {
     public String name, description;
     public Graph.Node currentRoom;
+    public boolean movedFlag = false;
 
     public MovingEntity(Graph.Node currentRoom) {
         super();
         this.currentRoom = currentRoom;
         currentRoom.addMovingEntity(this);
+    }
+
+    public void setMovedFlag(boolean flag) {
+        this.movedFlag = flag;
+    }
+
+    public boolean getMovedFlag() {
+        return movedFlag;
+    }
+
+    public Graph.Node getRoom() {
+        return currentRoom;
     }
 
     public String getName() {
@@ -51,10 +64,11 @@ public abstract class MovingEntity extends ItemContainer {
         }
     }
 
-    public abstract void moveToRandomRoom();
+    public abstract boolean moveToRandomRoom();
 
     public Graph.Node getRandomAdjacentRoom() {
-        return currentRoom.getRandomNeighbor();
+        Graph.Node n = currentRoom.getRandomNeighbor();
+        return n;
     }
 
     public boolean isRoomCloserTo(Player p, Graph.Node n) {

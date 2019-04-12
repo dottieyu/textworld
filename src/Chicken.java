@@ -15,7 +15,7 @@ public class Chicken extends MovingEntity {
         this.description = description;
     }
 
-    public void moveToRandomRoom() {
-        this.moveToRoom(this.getRandomAdjacentRoom());
+    public boolean moveToRandomRoom() {
+        return this.moveToRoom(this.getRandomAdjacentRoom());
     }
 }

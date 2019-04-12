@@ -35,7 +35,9 @@ public class Main {
         items.add(new Item("ball"));
         player.addItems(items);
 
-        g.getNode("closet").addMovingEntities(50, "chicken");
+        g.getNode("closet").addMovingEntities(3, "chicken");
+        g.getNode("bedroom1").addMovingEntities(3, "popstar");
+        g.getNode("bathroom").addMovingEntities(3, "wumpus");
 
         // user
         String[] in;
@@ -50,11 +52,10 @@ public class Main {
             boolean flag = command.execute();
             if (flag) {
                 System.out.println("SUCCESS");
+                g.moveAllMovingEntitiesToRandomRoom();
             } else {
-                System.out.println("can't do that. available commands: go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>");
+                System.out.println("can't do that. available commands: kill <movingEntity>, go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>");
             }
-
-            g.moveAllMovingEntitiesToRandomRoom();
 
             System.out.println();
 
@@ -68,6 +69,7 @@ public class Main {
         if (in[0].equals("addroom")) return new AddroomCommand(g, in, player);
         if (in[0].equals("take")) return new TakeCommand(in, player);
         if (in[0].equals("drop")) return new DropCommand(in, player);
+        if (in[0].equals("kill")) return new KillCommand(in, player);
 
         return new ErrorCommand(in, player);
     }

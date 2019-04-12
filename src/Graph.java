@@ -50,12 +50,37 @@ public class Graph {
     }
 
     public boolean moveAllMovingEntitiesToRandomRoom() {
-        for (Node node : nodes.values()) {
-            for (MovingEntity movingEntity : node.getMovingEntities()) {
-                movingEntity.moveToRandomRoom();
+        boolean flag = false;   // because moving a creature removes it from the ArrayList<MovingEntity> for each node,
+                                // this flag signals to subtract 1 from i (i = i-1) to ensure that every MovingEntity is moved.
+                                // each creature also has its own movedFlag field that turns true when the creature is moved,
+                                // so that it doesn't get moved twice. All flags are reset to false at the end of the loops.
+                                // This method is really messy sorry I couldn't think of a better way than using flags
+        for (String key : nodes.keySet()) {
+            ArrayList<MovingEntity> movingEntities = nodes.get(key).getMovingEntities();
+
+            for (int i = 0; i < movingEntities.size(); i++) {
+                MovingEntity creature = movingEntities.get(i);
+
+                if (creature.getClass() != Player.class && !creature.getMovedFlag()) {
+                    flag = creature.moveToRandomRoom();
+                    creature.setMovedFlag(true);
+                }
+
+                if (flag) i = i-1;
+                flag = false;
             }
         }
+        resetFlags();
         return true;
+    }
+
+    private void resetFlags() {
+        for (String key : nodes.keySet()) {
+            ArrayList<MovingEntity> movingEntities = nodes.get(key).getMovingEntities();
+            for (MovingEntity movingEntity : movingEntities) {
+                movingEntity.setMovedFlag(false);
+            }
+        }
     }
 
     public class Node extends ItemContainer {
@@ -96,7 +121,8 @@ public class Graph {
         public Node getRandomNeighbor() {
             if (this.neighbors.size() == 0) return this;
             int i = (int) (Math.random() * this.neighbors.size());
-            return this.neighbors.get(i);
+            String key = (String) this.neighbors.keySet().toArray()[i];
+            return this.neighbors.get(key);
         }
 
         /**
@@ -121,6 +147,24 @@ public class Graph {
 
         public boolean containsNeighbor(Graph.Node name) {
             return neighbors.containsValue(name);
+        }
+
+        public boolean containsPlayer(String name) {
+            for (MovingEntity movingEntity : movingEntities) {
+                if (movingEntity.getName().equals(name)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Node containsAPlayer() {
+            for (MovingEntity movingEntity : movingEntities) {
+                if (movingEntity.getClass() == Player.class) {
+                    return movingEntity.getRoom();
+                }
+            }
+            return null;
         }
 
         public String getName() {
@@ -168,17 +212,17 @@ public class Graph {
         public boolean addMovingEntities(int n, String type) {
             if (type.equals("chicken")) {
                 for (int i = 0; i < n; i++) {
-                    movingEntities.add(new Chicken("chick" + i, this));
+                    new Chicken("chick" + i, this);
                 }
                 return true;
             } else if (type.equals("wumpus")) {
                 for (int i = 0; i < n; i++) {
-                    movingEntities.add(new Wumpus("wumpus" + i, this));
+                    new Wumpus("wumpus" + i, this);
                 }
                 return true;
-            } else if (type.equals("pop star")) {
+            } else if (type.equals("popstar")) {
                 for (int i = 0; i < n; i++) {
-                    movingEntities.add(new PopStar("pop star" + i, this));
+                    new PopStar("popstar" + i, this);
                 }
                 return true;
             }

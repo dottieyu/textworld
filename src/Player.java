@@ -15,9 +15,10 @@ public class Player extends MovingEntity {
         this.description = description;
     }
 
-    public void moveToRandomRoom() {
-        if (currentRoom.getNeighborRooms().size() == 0) return;
+    public boolean moveToRandomRoom() {
+        if (currentRoom.getNeighborRooms().size() == 0) return false;
         int i = (int) (Math.random() * currentRoom.getNeighborRooms().size());
         this.moveToRoom(currentRoom.getNeighborRooms().get(i));
+        return true;
     }
 }
