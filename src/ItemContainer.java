@@ -7,12 +7,16 @@ public abstract class ItemContainer {
         this.items = new ArrayList<>();
     }
 
-    public void addItem(Item item) {
+    public boolean addItem(Item item) {
+        if (item == null) return false;
         items.add(item);
+        return true;
     }
 
-    public void addItems(ArrayList<Item> items) {
+    public boolean addItems(ArrayList<Item> items) {
+        if (items == null) return false;
         this.items.addAll(items);
+        return true;
     }
 
     public Item removeItem(String name) {
