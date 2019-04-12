@@ -110,7 +110,7 @@ public class Graph {
         }
 
         /**
-         * Return neighb or whose name is name. Returns null otherwise.
+         * Return neighbor whose name is name. Returns null otherwise.
          * @param name name of neighboring node to return.
          * @return returns neighboring node with correct name
          */
