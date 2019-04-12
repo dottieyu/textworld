@@ -20,7 +20,7 @@ public class Wumpus extends MovingEntity {
         if (playerRoom == null) return false;
 
         do {
-            this.moveToRoom(this.getRandomAdjacentRoom());
+            this.moveToRoom(this.getRandomAdjacentOfAdjacentRoom());
         } while (currentRoom == playerRoom);
 
         return true;

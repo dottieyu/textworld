@@ -16,7 +16,7 @@ public class PopStar extends MovingEntity {
 
     @Override
     public boolean moveToRandomRoom() {
-        for (Graph.Node n : currentRoom.getNeighborRooms()) {
+        for (Graph.Node n : currentRoom.getNeighborsOfNeighbors()) {
             if (n.containsAPlayer() != null) {
                 this.moveToRoom(n);
                 return true;

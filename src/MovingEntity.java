@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class MovingEntity extends ItemContainer {
     public String name, description;
     public Graph.Node currentRoom;
@@ -69,6 +71,13 @@ public abstract class MovingEntity extends ItemContainer {
     public Graph.Node getRandomAdjacentRoom() {
         Graph.Node n = currentRoom.getRandomNeighbor();
         return n;
+    }
+
+    public Graph.Node getRandomAdjacentOfAdjacentRoom() {
+        ArrayList<Graph.Node> n = currentRoom.getNeighborsOfNeighbors();
+        if (n.size() == 0) return currentRoom;
+        int i = (int) (Math.random() * n.size());
+        return n.get(i);
     }
 
     public String toString() {

@@ -118,6 +118,14 @@ public class Graph {
             return neighbors.get(name);
         }
 
+        public ArrayList<Node> getNeighborsOfNeighbors() {
+            ArrayList<Node> neighborsFfNeighbors = new ArrayList<>();
+            for (Node node : getNeighborRooms()) {
+                neighborsFfNeighbors.add(node);
+            }
+            return neighborsFfNeighbors;
+        }
+
         public Node getRandomNeighbor() {
             if (this.neighbors.size() == 0) return this;
             int i = (int) (Math.random() * this.neighbors.size());
