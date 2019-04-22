@@ -9,7 +9,7 @@ public class AddroomCommand extends Command {
     @Override
     public boolean execute() {
         g.addNode(in[1]);
-        g.addDirectedEdge(player.getCurrentRoom().getName(), in[1]);
+        g.addUndirectedEdge(player.getCurrentRoom().getName(), in[1]);
         return true;
     }
 }
