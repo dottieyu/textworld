@@ -12,6 +12,8 @@ public class Main {
         Scanner s = new Scanner(System.in);
 
         do {
+            System.out.println();
+
             System.out.println("You are in the " + player.getCurrentRoom().getName());
             System.out.print("What do you want to do? >");
             in = s.nextLine().split(" ");
@@ -20,29 +22,27 @@ public class Main {
             boolean flag = command.execute();
             if (flag) {
                 System.out.println("***SUCCESS***");
-                g.moveAllMovingEntitiesToRandomRoom();
             } else {
-                System.out.println("can't do that. available commands: kill <movingEntity>, go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>");
+                System.out.println("can't do that. available commands: kill <movingEntity>, go <room>, look, or addroom <room>?, take <itemName>, drop <itemName>, rename <movingEntityOldName> <movingEntityNewName>");
             }
-
-            System.out.println();
 
         } while (!in[0].equals("quit"));
 
     }
 
     public static Command parseCommand(String[] in) {
-        if (in[0].equals("go")) return new GoCommand(in, player);
+        if (in[0].equals("go")) return new GoCommand(g, in, player);
         if (in[0].equals("look")) return new LookCommand(g, in, player);
         if (in[0].equals("addroom")) return new AddroomCommand(g, in, player);
         if (in[0].equals("take")) return new TakeCommand(in, player);
         if (in[0].equals("drop")) return new DropCommand(in, player);
         if (in[0].equals("kill")) return new KillCommand(in, player);
+        if (in[0].equals("rename")) return new RenameCommand(g, in, player);
 
         return new ErrorCommand(in, player);
     }
 
-    public static void createWorld() {
+    public static void createWorld(int numChicken, int numPopstar, int numWumpus) {
 
         // create nodes and edges
         g = new Graph();
@@ -53,7 +53,7 @@ public class Main {
         g.addNode("bedroom2", "brother's bedroom");
         g.addNode("bathroom", "go pee");
         g.addNode("kitchen", "smells yummy");
-        g.addNode("living room");
+        g.addNode("livingroom");
 
         g.addDirectedEdge("hall", "dungeon");
         g.addUndirectedEdge("hall", "closet");
@@ -62,7 +62,7 @@ public class Main {
         g.addUndirectedEdge("hall", "bathroom");
         g.addUndirectedEdge("bedroom1", "bathroom");
         g.addUndirectedEdge("hall", "kitchen");
-        g.addUndirectedEdge("living room", "kitchen");
+        g.addUndirectedEdge("livingroom", "kitchen");
         g.addUndirectedEdge("bedroom1", "bedroom2");
 
         // create player
@@ -73,8 +73,20 @@ public class Main {
         items.add(new Item("ball"));
         player.addItems(items);
 
-        g.getNode("closet").addMovingEntities(3, "chicken");
-        g.getNode("bedroom1").addMovingEntities(3, "popstar");
-        g.getNode("bathroom").addMovingEntities(3, "wumpus");
+        g.getNode("closet").addMovingEntities(numChicken, "chicken");
+        g.getNode("bedroom1").addMovingEntities(numPopstar, "popstar");
+        g.getNode("bathroom").addMovingEntities(numWumpus, "wumpus");
+    }
+
+    public static void createWorld() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("WELCOME TO TEXTWORLD! In this game there are creatures, objects, and rooms you can interact with.");
+        System.out.print("How many chickens? Chickens are born in the closet. >");
+        int numChicken = Integer.parseInt(s.nextLine());
+        System.out.print("How many popstars? Popstars are born in bedroom1. >");
+        int numPopstar = Integer.parseInt(s.nextLine());
+        System.out.print("How many wumpuses? Wumpuses are born in the bathroom. >");
+        int numWumpus = Integer.parseInt(s.nextLine());
+        createWorld(numChicken, numPopstar, numWumpus);
     }
 }

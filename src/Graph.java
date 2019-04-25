@@ -183,6 +183,15 @@ public class Graph {
             return null;
         }
 
+        public MovingEntity getMovingEntity(String name) {
+            for (MovingEntity movingEntity : movingEntities) {
+                if (movingEntity.getName().equals(name)) {
+                    return movingEntity;
+                }
+            }
+            return null;
+        }
+
         public String getName() {
             return name;
         }

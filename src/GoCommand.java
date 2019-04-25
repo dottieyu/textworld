@@ -1,7 +1,9 @@
 public class GoCommand extends Command {
+    Graph g;
 
-    public GoCommand(String[] in, MovingEntity player) {
+    public GoCommand(Graph g, String[] in, MovingEntity player) {
         super(in, player);
+        this.g = g;
     }
 
     @Override
@@ -9,9 +11,12 @@ public class GoCommand extends Command {
         if (in.length == 2) {
             if (in[1].equals("random")) {
                 player.moveToRandomRoom();
+                g.moveAllMovingEntitiesToRandomRoom();
                 return true;
             } else {
-                return player.moveToRoom(in[1]);
+                boolean b = player.moveToRoom(in[1]);
+                g.moveAllMovingEntitiesToRandomRoom();
+                return b;
             }
         }
         return false;
