@@ -23,7 +23,7 @@ public class Main {
             if (flag) {
                 System.out.println("***SUCCESS***");
             } else {
-                System.out.println("can't do that. available commands: kill <movingEntity>, go <room>, look, or addroom <room>, addconnection <room>, take <itemName>, drop <itemName>, rename <movingEntityOldName> <movingEntityNewName>");
+                System.out.println("can't do that. available commands: \n\tkill <movingEntity> \n\tgo <room> \n\tlook \n\taddroom <room> \n\taddconnection <room> \n\ttake <itemName> \n\tdrop <itemName> \n\trename <movingEntityOldName> <movingEntityNewName>");
             }
 
         } while (!in[0].equals("quit"));
