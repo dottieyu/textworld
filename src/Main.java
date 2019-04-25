@@ -23,7 +23,7 @@ public class Main {
             if (flag) {
                 System.out.println("***SUCCESS***");
             } else {
-                System.out.println("can't do that. available commands: \n\tkill <movingEntity> \n\tgo <room> \n\tlook \n\taddroom <room> \n\taddconnection <room> \n\ttake <itemName> \n\tdrop <itemName> \n\trename <movingEntityOldName> <movingEntityNewName>");
+                System.out.println("can't do that. available commands: \n\tkill <movingEntity> \n\tgo <room> \n\tlook \n\taddroom <room> \n\taddconnection <room> \n\ttake <itemName> \n\tdrop <itemName> \n\trename <movingEntityOldName> <movingEntityNewName> \n\tdebughelp");
             }
 
         } while (!in[0].equals("quit"));
@@ -39,6 +39,7 @@ public class Main {
         if (in[0].equals("kill")) return new KillCommand(in, player);
         if (in[0].equals("rename")) return new RenameCommand(g, in, player);
         if (in[0].equals("addconnection")) return new AddconnectionCommand(g, in, player);
+        if (in[0].equals("debughelp")) return new DebugCommand(g, in, player);
 
         return new ErrorCommand(in, player);
     }

@@ -9,9 +9,6 @@ public class LookCommand extends Command {
     @Override
     public boolean execute() {
         if (in.length == 1) {
-            System.out.println("MASTER GRAPH INFORMATION");
-            System.out.println(g.toString());
-            System.out.println();
             System.out.println("YOU CAN ENTER: " + player.getCurrentRoom().getNeighborNames());
             System.out.println("YOU CAN TAKE: " + player.getCurrentRoom().getItemInventory());
             System.out.println("YOU CAN DROP: " + player.getItemInventory());
