@@ -127,11 +127,12 @@ public class Graph {
         }
 
         public ArrayList<Node> getNeighborsOfNeighbors() {
-            ArrayList<Node> neighborsFfNeighbors = new ArrayList<>();
+            // TODO: this method is incorrect, it only returns arraylist of neighbors
+            ArrayList<Node> neighborsofNeighbors = new ArrayList<>();
             for (Node node : getNeighborRooms()) {
-                neighborsFfNeighbors.add(node);
+                neighborsofNeighbors.add(node);
             }
-            return neighborsFfNeighbors;
+            return neighborsofNeighbors;
         }
 
         public Node getRandomNeighbor() {
@@ -154,7 +155,11 @@ public class Graph {
         }
 
         public ArrayList<Node> getNeighborRooms() {
-            return new ArrayList<>(this.neighbors.values());
+            ArrayList<Node> neighbors = new ArrayList<>();
+            for (String s : this.neighbors.keySet()) {
+                neighbors.add(this.neighbors.get(s));
+            }
+            return neighbors;
         }
 
         public boolean containsNeighbor(String name) {

@@ -55,6 +55,9 @@ public class Main {
         g.addNode("bathroom", "go pee");
         g.addNode("kitchen", "smells yummy");
         g.addNode("livingroom");
+        g.addNode("door");
+        g.addNode("garden");
+        g.addNode("secretfoodstash");
 
         g.addDirectedEdge("hall", "dungeon");
         g.addUndirectedEdge("hall", "closet");
@@ -65,6 +68,9 @@ public class Main {
         g.addUndirectedEdge("hall", "kitchen");
         g.addUndirectedEdge("livingroom", "kitchen");
         g.addUndirectedEdge("bedroom1", "bedroom2");
+        g.addUndirectedEdge("livingroom", "door");
+        g.addUndirectedEdge("door", "garden");
+        g.addUndirectedEdge("garden", "secretfoodstash");
 
         // create player
         player = new Player("dottie", "best player", g.getNode("hall"));
@@ -75,7 +81,7 @@ public class Main {
         player.addItems(items);
 
         g.getNode("closet").addMovingEntities(numChicken, "chicken");
-        g.getNode("bedroom1").addMovingEntities(numPopstar, "popstar");
+        g.getNode("secretfoodstash").addMovingEntities(numPopstar, "popstar");
         g.getNode("bathroom").addMovingEntities(numWumpus, "wumpus");
     }
 
@@ -84,7 +90,7 @@ public class Main {
         System.out.println("WELCOME TO TEXTWORLD! In this game there are creatures, objects, and rooms you can interact with.");
         System.out.print("How many chickens? Chickens are born in the closet. >");
         int numChicken = Integer.parseInt(s.nextLine());
-        System.out.print("How many popstars? Popstars are born in bedroom1. >");
+        System.out.print("How many popstars? Popstars are born in the secretfoodstash. >");
         int numPopstar = Integer.parseInt(s.nextLine());
         System.out.print("How many wumpuses? Wumpuses are born in the bathroom. >");
         int numWumpus = Integer.parseInt(s.nextLine());

@@ -22,7 +22,7 @@ public class Wumpus extends MovingEntity {
         do {
             this.moveToRoom(this.getRandomAdjacentOfAdjacentRoom());
         } while (currentRoom == playerRoom);
-
+        // TODO: fix bug of infinite loop where wumpus has nowhere to go except currentroom
         return true;
 
     }
